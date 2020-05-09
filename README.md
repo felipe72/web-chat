@@ -1,24 +1,28 @@
-# web-chat
+# Web Chat
 
-## Project setup
-```
-npm install
+A web chat using vue and firebase. 
+
+## Getting Started
+
+These instructions will cover usage information and for the docker container 
+
+### Prerequisities
+
+In order to run this project you'll need docker and docker-compose installed.
+
+* [docker](https://docs.docker.com/engine/install/)
+* [docker-compose](https://docs.docker.com/compose/install/)
+
+### Usage
+
+#### Run application
+
+```shell
+docker-compose up
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+#### Run tests
 
-### Compiles and minifies for production
+```shell
+docker-compose run npm run test:unit
 ```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
