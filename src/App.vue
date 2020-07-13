@@ -1,30 +1,24 @@
 <template>
-  <div id="app">
-    {{ documents }}
-  </div>
+  <v-app id="app">
+    <navbar v-model="drawer" />
+    <app-bar v-model="drawer" />
+    <main-content />
+  </v-app>
 </template>
 
 <script>
 import { db } from './db'
+import Navbar from './components/Navbar';
+import AppBar from './components/AppBar';
+import MainContent from './components/MainContent';
 
 export default {
   name: 'App',
-  data() {
-    return { documents: [] };
-  },
-  firestore: {
-    documents: db.collection('documents'),
-  },
+  components: { Navbar, MainContent, AppBar },
+  data: () => ({ drawer: false })
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="sass">
+@import '~style/base'
 </style>
