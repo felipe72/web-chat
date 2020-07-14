@@ -1,5 +1,5 @@
 <template>
-  <v-card class="chart-card">
+  <v-card class="chat-card">
     <v-card-title>
       {{ name }}
     </v-card-title>
@@ -10,7 +10,9 @@
     <v-card-actions>
       <v-spacer />
       <v-btn text color="deep-purple accent-4">
-        Enter
+        <router-link style="text-decoration: none;" :to="destination">
+          Enter
+        </router-link>
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -18,7 +20,7 @@
 
 <script>
 export default {
-  name: 'ChartCard',
+  name: 'ChatCard',
   props: {
     name: {
       type: String,
@@ -27,13 +29,22 @@ export default {
     description: {
       type: String,
       default: '',
-    }
-  }
+    },
+    id: {
+      type: String,
+      default: '',
+    },
+  },
+  computed: {
+    destination() {
+      return { name: 'chat', params: { chat: this.id } };
+    },
+  },
 };
 </script>
 
 <style lang="sass" scoped>
-.chart-card
+.chat-card
   margin: 0 16px
   flex: 1 0 calc(33% - 32px)
 </style>
