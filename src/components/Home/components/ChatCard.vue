@@ -9,8 +9,14 @@
 
     <v-card-actions>
       <v-spacer />
-      <v-btn text color="deep-purple accent-4">
-        <router-link style="text-decoration: none;" :to="destination">
+      <v-btn
+        text
+        color="deep-purple accent-4"
+      >
+        <router-link
+          style="text-decoration: none;"
+          :to="destination"
+        >
           Enter
         </router-link>
       </v-btn>

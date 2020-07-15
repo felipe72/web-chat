@@ -4,7 +4,11 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify';
 import router from './router'
 
-Vue.use(firestorePlugin)
+
+const serialize = (snapshot) => {
+  return Object.defineProperty(snapshot.data(), 'id', { value: snapshot.id })
+}
+Vue.use(firestorePlugin, { serialize });
 
 new Vue({
   vuetify,
