@@ -1,7 +1,8 @@
 const path = require('path');
 module.exports = {
+  runtimeCompiler: true,
   lintOnSave: true,
-  transpileDependencies: ["vuetify"],
+  transpileDependencies: ['vuetify'],
   configureWebpack: {
     resolve: {
       extensions: ['.js', '.vue', '.json', '.scss', '.sass'],
@@ -12,4 +13,10 @@ module.exports = {
       },
     },
   },
-}
+  devServer: {
+    watchOptions: {
+      poll: true,
+      ignored: ['node_modules'],
+    },
+  },
+};

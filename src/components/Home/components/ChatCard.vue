@@ -45,6 +45,6 @@ export default {
 
 <style lang="sass" scoped>
 .chat-card
-  margin: 0 16px
+  margin: 16px
   flex: 1 0 calc(33% - 32px)
 </style>
