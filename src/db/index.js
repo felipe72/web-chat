@@ -17,4 +17,5 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 const currentUser = auth.currentUser;
 
-export { db, auth, currentUser };
+const { Timestamp, GeoPoint } = firebase.firestore
+export { db, auth, currentUser, Timestamp, GeoPoint };

@@ -2,9 +2,9 @@
   <div class="fill-height chat">
     <div class="messages-container">
       <message
-        v-for="(message, id) in reversed"
+        v-for="(msg, id) in messages"
         :key="id"
-        v-bind="message"
+        v-bind="msg"
         :class="id % 2 ? 'right' : 'left'"
       />
     </div>
@@ -22,6 +22,7 @@
 
 <script>
 import { db } from '~db';
+import firebase from "firebase";
 import Message from './Message';
 
 export default {
@@ -33,13 +34,8 @@ export default {
   firestore() {
     const { chat } = this.$route.params;
     return {
-      messages: db.collection('chats').doc(chat).collection('messages'),
+      messages: db.collection('chats').doc(chat).collection('messages').orderBy('date'),
     };
-  },
-  computed: {
-    reversed() {
-      return this.messages.slice().reverse();
-    }
   },
   methods: {
     async createMessage() {
@@ -49,6 +45,7 @@ export default {
         await query.add({
           text: this.message,
           user: 1,
+          date: firebase.firestore.FieldValue.serverTimestamp(),
         });
         this.message = '';
       } catch (e) {

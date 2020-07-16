@@ -1,6 +1,9 @@
 <template>
   <v-main>
-    <v-container fluid class="fill-height">
+    <v-container
+      fluid
+      class="fill-height"
+    >
       <keep-alive include="Home">
         <router-view />
       </keep-alive>

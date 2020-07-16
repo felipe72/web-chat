@@ -1,5 +1,8 @@
 <template>
-  <v-card class="message" outlined>
+  <v-card
+    class="message"
+    outlined
+  >
     <v-card-text class="content">
       {{ text }}
     </v-card-text>

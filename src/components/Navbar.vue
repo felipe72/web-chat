@@ -1,7 +1,14 @@
 <template>
-  <v-navigation-drawer v-model="model" app clipped>
+  <v-navigation-drawer
+    v-model="model"
+    app
+    clipped
+  >
     <v-list dense>
-      <v-list-item @click="redirect" link>
+      <v-list-item
+        link
+        @click="redirect"
+      >
         <v-list-item-action>
           <v-icon>mdi-view-dashboard</v-icon>
         </v-list-item-action>
