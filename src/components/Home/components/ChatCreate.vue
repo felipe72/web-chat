@@ -33,15 +33,11 @@ import { db } from '~db';
 export default {
   name: 'ChatCreate',
   methods: {
-    async createChat() {
-      try {
-        const query = await db.collection('chats').add({
-          name: 'New chat',
-          description: 'This is a new chat',
-        });
-      } catch (e) {
-        throw e;
-      }
+    createChat() {
+      return db.collection('chats').add({
+        name: 'New chat',
+        description: 'This is a new chat',
+      });
     },
   },
 };

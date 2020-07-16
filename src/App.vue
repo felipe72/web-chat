@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import { db } from './db'
 import Navbar from './components/Navbar';
 import AppBar from './components/AppBar';
 import MainContent from './components/MainContent';

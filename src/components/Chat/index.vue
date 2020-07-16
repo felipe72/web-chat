@@ -41,16 +41,12 @@ export default {
     async createMessage() {
       const { chat } = this.$route.params;
       const query = db.collection('chats').doc(chat).collection('messages');
-      try {
-        await query.add({
-          text: this.message,
-          user: 1,
-          date: firebase.firestore.FieldValue.serverTimestamp(),
-        });
-        this.message = '';
-      } catch (e) {
-        throw e;
-      }
+      await query.add({
+        text: this.message,
+        user: 1,
+        date: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+      this.message = '';
     },
   },
 };
