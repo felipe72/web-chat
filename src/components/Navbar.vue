@@ -1,16 +1,12 @@
 <template>
-  <v-navigation-drawer
-    v-model="model"
-    app
-    clipped
-  >
+  <v-navigation-drawer v-model="model" app clipped>
     <v-list dense>
-      <v-list-item link>
+      <v-list-item @click="redirect" link>
         <v-list-item-action>
           <v-icon>mdi-view-dashboard</v-icon>
         </v-list-item-action>
         <v-list-item-content>
-          <v-list-item-title>Dashboard</v-list-item-title>
+          <v-list-item-title>Home</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
       <v-list-item link>
@@ -27,7 +23,7 @@
 
 <script>
 export default {
-  name: "Navbar",
+  name: 'Navbar',
   props: {
     value: {
       type: Boolean,
@@ -40,8 +36,15 @@ export default {
         return this.value;
       },
       set(value) {
-        this.$emit("input", value);
+        this.$emit('input', value);
       },
+    },
+  },
+  methods: {
+    redirect() {
+      const { name } = this.$route;
+      if (name === 'root') this.model = false;
+      else this.$router.push({ name: 'root' });
     },
   },
 };

@@ -26,6 +26,8 @@ export default {
 
 <style lang="sass" scoped>
 .home
+  flex: 1
+  align-self: flex-start
   display: flex
   flex-wrap: wrap
 </style>
