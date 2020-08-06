@@ -18,8 +18,8 @@ export default {
       default: '',
     },
     user: {
-      type: Number,
-      default: 0,
+      type: [Object, String],
+      required: true,
     },
   },
 };
@@ -29,6 +29,9 @@ export default {
 .message
   width: fit-content
   min-width: 200px
+  &.right
+    .content
+      text-align: right
   .content
     padding: 4px 8px
 </style>

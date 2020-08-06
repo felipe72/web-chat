@@ -3,12 +3,12 @@
     <template v-slot:activator>
       <v-list-item-title>Username</v-list-item-title>
     </template>
-    {{user}}
 
     <v-list-item>
       <v-list-item-content>
+        <!-- Instead of using v-model, it would be better to use a debounced input method -->
         <v-text-field
-          :value="'Username'"
+          v-model="nameModel"
           label="Outlined"
           single-line
           outlined
@@ -22,7 +22,7 @@
 
 <script>
 import { db } from '~db';
-import firebase from "firebase";
+import firebase from 'firebase';
 
 export default {
   name: 'UsernameTab',
@@ -30,19 +30,38 @@ export default {
     return { user: {}, id: localStorage.getItem('id') || '' };
   },
   firestore() {
-    return { user: db.collection('users').doc(this.id) };
+    if (this.id) {
+      return { user: db.collection('users').doc(this.id) };
+    } else {
+      this.createUser();
+    }
+  },
+  computed: {
+    nameModel: {
+      get() {
+        return this.user.name;
+      },
+      set(value) {
+        this.updateUser(value);
+      },
+    },
   },
   methods: {
     async createUser() {
-      const query = db.collection('users')
+      const query = db.collection('users');
       const { id } = await query.add({
-        name: 'my-new-user',
+        name: 'default-username',
         date: firebase.firestore.FieldValue.serverTimestamp(),
       });
 
       localStorage.setItem('id', id);
-      this.id = id;
-    }
-  }
+      location.reload();
+    },
+
+    updateUser(name) {
+      const query = db.collection('users').doc(this.id);
+      query.set({ name });
+    },
+  },
 };
 </script>

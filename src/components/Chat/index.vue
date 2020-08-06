@@ -5,7 +5,7 @@
         v-for="(msg, id) in messages"
         :key="id"
         v-bind="msg"
-        :class="id % 2 ? 'right' : 'left'"
+        :class="isSameUser(msg.user) ? 'right' : 'left'"
       />
     </div>
     <div class="input-container">
@@ -22,31 +22,45 @@
 
 <script>
 import { db } from '~db';
-import firebase from "firebase";
+import firebase from 'firebase';
 import Message from './Message';
 
 export default {
   name: 'Chat',
   components: { Message },
   data() {
-    return { messages: [], message: '' };
+    return { messages: [], message: '', user: localStorage.getItem('id') };
   },
   firestore() {
     const { chat } = this.$route.params;
     return {
-      messages: db.collection('chats').doc(chat).collection('messages').orderBy('date'),
+      messages: db
+        .collection('chats')
+        .doc(chat)
+        .collection('messages')
+        .orderBy('date'),
     };
   },
   methods: {
+    isSameUser({ id }) {
+      return this.user == id;
+    },
+
     async createMessage() {
+      const { message } = this;
+      // Clear input field before sending request
+      this.message = '';
+
       const { chat } = this.$route.params;
+
       const query = db.collection('chats').doc(chat).collection('messages');
+      const user = db.collection('users').doc(this.user);
+
       await query.add({
-        text: this.message,
-        user: 1,
+        text: message,
+        user: await user,
         date: firebase.firestore.FieldValue.serverTimestamp(),
       });
-      this.message = '';
     },
   },
 };
@@ -65,5 +79,4 @@ export default {
       align-self: flex-start
     .right
       align-self: flex-end
-  .input-container
 </style>
