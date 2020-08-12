@@ -28,7 +28,7 @@ export default {
 <style lang="sass" scoped>
 .message
   width: fit-content
-  min-width: 200px
+  min-width: 100px
   &.right
     .content
       text-align: right

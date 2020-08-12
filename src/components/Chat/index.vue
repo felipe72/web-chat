@@ -1,19 +1,28 @@
 <template>
   <div class="fill-height chat">
     <div class="messages-container">
-      <message
-        v-for="(msg, id) in messages"
-        :key="id"
-        v-bind="msg"
-        :class="isSameUser(msg.user) ? 'right' : 'left'"
-      />
+      <template v-for="(msg, id) in messages">
+        <div
+          :key="id + 'userName'"
+          :class="[whichSide(msg), 'caption']"
+        >
+          {{ msg.user.name }}
+        </div>
+        <message
+          v-bind="msg"
+          :key="id"
+          :class="whichSide(msg)"
+        />
+      </template>
     </div>
     <div class="input-container">
       <v-text-field
         v-model="message"
-        label="Outlined"
-        single-line
+        label="Your message"
+        append-icon="mdi-send"
         outlined
+        :loading="loading"
+        @click:append="createMessage"
         @keyup.enter="createMessage"
       />
     </div>
@@ -29,7 +38,12 @@ export default {
   name: 'Chat',
   components: { Message },
   data() {
-    return { messages: [], message: '', user: localStorage.getItem('id') };
+    return {
+      messages: [],
+      message: '',
+      userID: localStorage.getItem('id'),
+      loading: false,
+    };
   },
   firestore() {
     const { chat } = this.$route.params;
@@ -42,11 +56,12 @@ export default {
     };
   },
   methods: {
-    isSameUser({ id }) {
-      return this.user == id;
+    whichSide({ user }) {
+      return this.userID == user.id ? 'right' : 'left';
     },
 
     async createMessage() {
+      this.loading = true;
       const { message } = this;
       // Clear input field before sending request
       this.message = '';
@@ -54,13 +69,14 @@ export default {
       const { chat } = this.$route.params;
 
       const query = db.collection('chats').doc(chat).collection('messages');
-      const user = db.collection('users').doc(this.user);
+      const user = db.collection('users').doc(this.userID);
 
       await query.add({
         text: message,
         user: await user,
         date: firebase.firestore.FieldValue.serverTimestamp(),
       });
+      this.loading = false;
     },
   },
 };
